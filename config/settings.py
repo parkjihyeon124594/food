@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CyberPioneers',#db명
-        'USER': 'root', #db user 이름
+        'NAME': 'CyberPioneers',#db name
+        'USER': 'root', #db user 
         'PASSWORD': 'knulinkmoa1234', #db password
-        'HOST': 'localhost', #나중에 aws로 연결
-        'PORT': '3306', #mysql 포트번호
+        'HOST': 'localhost', 
+        'PORT': '3306', #mysql port number
     }
 }
 
