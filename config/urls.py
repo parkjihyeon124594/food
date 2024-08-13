@@ -4,7 +4,8 @@ from django.conf import settings
 from django.urls import path,include
 import dietRecommendation.views
 import foods.views
-from member.views import LoginView, LogoutView, RegisterView, register_view, login_view,post
+#from member.views import LoginView, LogoutView, RegisterView, register_view, login_view,post
+from member.views import LogoutView, RegisterView, register_view, login_view, post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,7 +17,7 @@ urlpatterns = [
     path('api/meals/extract',foods.views.extract_and_save_meal_info),
     #
     #path('api_login/', LoginView.as_view(), name='api-login'),
-    path('api_login/',post),
+    path('api_login/', post, name='api-login'),
     path('api_register/', RegisterView.as_view(), name='api-register'),     
 
     path('', include('foods.urls')),

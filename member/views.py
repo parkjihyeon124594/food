@@ -13,6 +13,8 @@ from .serializers import RegisterSerializer
 from .models import UserProfile
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth import get_user_model
+import json
+from django.http import JsonResponse
 
 User = get_user_model()
 
@@ -58,9 +60,9 @@ def register_view(request):
 
 # Login 
 def post(request):
-    email = request.data.get('email')
-    password = request.data.get('password')
-    
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
 
     if not email or not password:
         return JsonResponse({"message": "Email and password are required"}, status=400)
