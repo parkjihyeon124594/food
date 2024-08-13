@@ -2,7 +2,7 @@ from openai import OpenAI
 import re
 
 
-client = OpenAI(api_key= 'sk-None-seWbT3E091YJULvkFWSzT3BlbkFJgL9xGC3agN1lmJNFvMI2')
+client = OpenAI(api_key= 'sk-vW-Pte2WN_hlhm__LbfjyXCVAfmsWzgzHkxia5FT47T3BlbkFJyl9ythf6RhiIawVER8gb3AHQMDDC8ob_n6R4KFIMEA')
 
 def recommend_food(food=''):
   response = client.chat.completions.create(
@@ -21,7 +21,7 @@ def recommend_food(food=''):
   return response.choices[0].message.content
 
 from openai import OpenAI
-client = OpenAI(api_key= 'sk-None-seWbT3E091YJULvkFWSzT3BlbkFJgL9xGC3agN1lmJNFvMI2')
+client = OpenAI(api_key= 'sk-vW-Pte2WN_hlhm__LbfjyXCVAfmsWzgzHkxia5FT47T3BlbkFJyl9ythf6RhiIawVER8gb3AHQMDDC8ob_n6R4KFIMEA')
 def generate_image(food):
   response = client.images.generate(
     model="dall-e-3",

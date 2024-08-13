@@ -11,7 +11,7 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # API 키 직접 설정
-OPENAI_API_KEY = 'sk-None-seWbT3E091YJULvkFWSzT3BlbkFJgL9xGC3agN1lmJNFvMI2'
+OPENAI_API_KEY = 'sk-vW-Pte2WN_hlhm__LbfjyXCVAfmsWzgzHkxia5FT47T3BlbkFJyl9ythf6RhiIawVER8gb3AHQMDDC8ob_n6R4KFIMEA'
 
 #OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'foods',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
@@ -64,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 
@@ -143,3 +146,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 모든 출처 허용 (개발 환경에서만 사용, 주의)
+CORS_ALLOW_ALL_ORIGINS = True

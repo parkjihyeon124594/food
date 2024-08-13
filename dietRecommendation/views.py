@@ -19,7 +19,7 @@ from AiModel import dietRecommendation
 
 # Configure OpenAI API
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
-
+#client =OpenAI(api_key='sk-vW-Pte2WN_hlhm__LbfjyXCVAfmsWzgzHkxia5FT47T3BlbkFJyl9ythf6RhiIawVER8gb3AHQMDDC8ob_n6R4KFIMEA')
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -36,7 +36,7 @@ def dietRecommenationViews(request):
 
                 # 멤버 정보 검색
                 try:
-                    member = Member.objects.get(email=email)
+                    member = Member.objects.get(email=email) # 
                     member_info = {
                         'age': member.age,
                         'height': member.height,
