@@ -54,6 +54,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny'
     ],
 }
 
@@ -149,3 +150,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 모든 출처 허용 (개발 환경에서만 사용, 주의)
 CORS_ALLOW_ALL_ORIGINS = True
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
+]

@@ -1,5 +1,5 @@
 from django.db import models
-from member.models import Member
+from member.models import UserProfile
 
 class Meal(models.Model):
     MEAL_CHOICES = [

@@ -11,9 +11,9 @@ from .serializers import MealSerializer, FoodImageSerializer
 import json
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from member.models import Member
 import os
 import shutil
+from member.models import UserProfile
 from AiModel import foodClassification,foodRecommendation
 import re
 from datetime import datetime, timedelta
@@ -58,8 +58,8 @@ def meal_list(request):
             return JsonResponse({"error": "Email and date parameters are required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            member = Member.objects.get(email=email)
-        except Member.DoesNotExist:
+            member = UserProfile.objects.get(email=email)
+        except UserProfile.DoesNotExist:
             return JsonResponse({"error": "Member not found"}, status=status.HTTP_404_NOT_FOUND)
 
         try:
@@ -247,7 +247,6 @@ def generate_similar_foods(request):
 # 기능: 업로드된 이미지에서 식사 정보를 추출하고 저장
 @api_view(['POST'])
 @permission_classes([AllowAny])
-#@permission_classes([IsAuthenticated])
 def extract_and_save_meal_info(request):
 
     image = request.FILES['image']
@@ -285,7 +284,7 @@ def extract_and_save_meal_info(request):
 
 
     email = request.data.get('email')  # Get email from request data
-    if not Member.objects.filter(email=email).exists():
+    if not UserProfile.objects.filter(email=email).exists():
         return Response({"error": "Member not found"}, status=status.HTTP_404_NOT_FOUND)
 
     # Save meal information

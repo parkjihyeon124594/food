@@ -7,10 +7,10 @@ from django.utils import timezone
 from datetime import timedelta
 import json
 from .forms import PostForm
-from member.models import Member
+from member.models import UserProfile  # 수정된 import
 from rest_framework.permissions import AllowAny
 
-from foods.models import Meal, MealItem, FoodImage
+from foods.models import Meal, MealItem
 from foods.serializers import MealSerializer, FoodImageSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -19,7 +19,6 @@ from AiModel import dietRecommendation
 
 # Configure OpenAI API
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
-#client =OpenAI(api_key='sk-vW-Pte2WN_hlhm__LbfjyXCVAfmsWzgzHkxia5FT47T3BlbkFJyl9ythf6RhiIawVER8gb3AHQMDDC8ob_n6R4KFIMEA')
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -36,15 +35,15 @@ def dietRecommenationViews(request):
 
                 # 멤버 정보 검색
                 try:
-                    member = Member.objects.get(email=email) # 
+                    member = UserProfile.objects.get(email=email)  # 수정된 쿼리
                     member_info = {
-                        'age': member.age,
+                        'age': member.date_of_birth.year,  # Assuming age is calculated from date_of_birth
                         'height': member.height,
                         'medical_history': member.medical_history,
                         'gender': member.gender,
                         'weight': member.weight,
                     }
-                except Member.DoesNotExist:
+                except UserProfile.DoesNotExist:
                     member_info = None
 
                 # 현재 시간과 1달 전 시간 계산
@@ -63,13 +62,11 @@ def dietRecommenationViews(request):
                 ).values_list('food_name', flat=True)
 
                 food_names_str = ', '.join(food_names)
-                
-                
-                response_data = dietRecommendation.recommend_diet(country,meal_time,member_info,food_names_str)
+
+                response_data = dietRecommendation.recommend_diet(country, meal_time, member_info, food_names_str)
                 response_dict = json.loads(response_data)
-                
-                #return response_data
-                return JsonResponse(response_dict, status=200,safe=False)
+
+                return JsonResponse(response_dict, status=200, safe=False)
             else:
                 return JsonResponse({'error': 'Invalid data', 'details': form.errors}, status=400)
         except json.JSONDecodeError:
